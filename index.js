@@ -1,19 +1,45 @@
 const inquirer = require('inquirer')
 const fs = require('fs');
-const {Shape, Square, Triangle, Circle} = require('./lib/shapes');
+const {Shape, Square, Circle, Triangle} = require('./lib/shapes');
 const SVG = require('./lib/svg');
 
 const questions = [{
     type: "input",
-    message: "Enter up to three characters for your logo:",
+    message: "Enter up to three characters for your logo text:",
     name: "logoText",
-}]
+},
+{
+    type: "input",
+    message: "Enter a color keyword or hex value for your logo text:",
+    name: "logoTextColor",
+},
+{
+    type: "list",
+    message: "Select a logo background shape:",
+    name: "logoShape",
+    choices: ["Square", "Circle", "Triangle"],
+    default: ["Square"]
+},
+{
+    type: "input",
+    message: "Enter a color keyword or hex value for your logo background",
+    name: "logoShapeColor",
+}];
+
+function writeToFile(fileName, answers) {
+    fs.writeFile(fileName, answers, () => console.log('success!'))
+}
 
 function init() {
     inquirer
-        .prompt()
+        .prompt(questions)
         .then((answers) => {
-            console.log(answers)
+            const svg = new SVG();
+            svg.setText(answers.logoText, answers.logoTextColor)
+            const shape = eval(`new ${answers.logoShape}()`)
+            shape.setColor(answers.logoShapeColor)
+            svg.setShape(shape)
+            writeToFile('./examples/index.html', svg.render())
         })
 }
 init()
