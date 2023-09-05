@@ -1,17 +1,19 @@
+const inquirer = require('inquirer')
 const fs = require('fs');
-const {Shape, Square, Triangle, Circle} = require('./lib/shapes')
-const SVG = require('./lib/svg')
+const {Shape, Square, Triangle, Circle} = require('./lib/shapes');
+const SVG = require('./lib/svg');
 
+const questions = [{
+    type: "input",
+    message: "Enter up to three characters for your logo:",
+    name: "logoText",
+}]
 
-
-const circle = new Circle();
-circle.setColor("red")
-circle.render();
-
-
-const svg = new SVG();
-svg.setText("MJM", "yellow")
-svg.setShape(circle)
-console.log(svg)
-svg.render();
-
+function init() {
+    inquirer
+        .prompt()
+        .then((answers) => {
+            console.log(answers)
+        })
+}
+init()
