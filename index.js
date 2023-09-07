@@ -27,7 +27,7 @@ const questions = [{
 }];
 
 function writeToFile(fileName, answers) {
-    fs.writeFile(fileName, answers, () => console.log('success!'))
+    fs.writeFile(fileName, answers, () => console.log('Generated logo.svg!'))
 }
 
 function init() {
