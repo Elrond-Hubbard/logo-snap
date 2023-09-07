@@ -39,7 +39,7 @@ function init() {
             const shape = eval(`new ${answers.logoShape}()`)
             shape.setColor(answers.logoShapeColor)
             svg.setShape(shape)
-            writeToFile('./examples/logo.html', svg.render())
+            writeToFile('./examples/logo.svg', svg.render())
         })
 }
 init()
